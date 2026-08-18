@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        http-equiv="Content-Security-Policy"
+        content="default-src 'self'; connect-src 'self' http://127.0.0.1:8000; style-src 'self'; img-src 'self' data:; font-src 'self'; script-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';"
+    >
+
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+
+    <title>Sugercane — Sign in</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="auth-page">
+
+    <main class="auth-wrapper">
+
+        <!-- LEFT SIDE -->
+        <section class="auth-brand">
+
+            <a href="index.html" class="brand-logo">
+                sugercane.
+            </a>
+
+            <div class="brand-copy">
+                <h1>
+                    Welcome<br>
+                    back.
+                </h1>
+
+                <p>
+                    Sign in to access your Sugercane
+                    account.
+                </p>
+            </div>
+
+            <div class="brand-footer">
+                © 2026 Sugercane
+            </div>
+
+        </section>
+
+
+        <!-- RIGHT SIDE -->
+        <section class="auth-panel">
+
+            <div class="auth-content">
+
+                <a href="index.html" class="back">
+                    ← Back home
+                </a>
+
+                <h2>Sign in.</h2>
+
+                <p class="subtitle">
+                    Enter your details to continue.
+                </p>
+
+
+                <form id="authForm">
+
+                    <div class="form-group">
+
+                        <label for="phoneNumber">
+                            Phone number
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="phoneNumber"
+                            name="phone_number"
+                            placeholder="+254 7XX XXX XXX"
+                            autocomplete="tel"
+                            inputmode="tel"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Your password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div
+                        id="formMessage"
+                        class="form-message"
+                        aria-live="polite"
+                    ></div>
+
+
+                    <button
+                        type="submit"
+                        id="loginButton"
+                    >
+                        Sign in
+                    </button>
+
+                </form>
+
+
+                <p class="switch">
+                    Don't have an account?
+                    <a href="signup.html">
+                        Create one
+                    </a>
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="auth.js"></script>
+
+</body>
+</html>

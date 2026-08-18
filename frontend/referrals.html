@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        http-equiv="Content-Security-Policy"
+        content="default-src 'self';
+        style-src 'self';
+        img-src 'self' data:;
+        font-src 'self';
+        script-src 'self';
+        connect-src 'self' http://127.0.0.1:8000;
+        object-src 'none';
+        base-uri 'self';
+        form-action 'self';"
+    >
+
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+
+    <title>Sugercane — Referrals</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="referrals.css">
+</head>
+
+<body class="dashboard-page">
+
+<header class="dashboard-header">
+
+    <a href="dashboard.html" class="brand-logo">
+        sugercane.
+    </a>
+
+    <div class="header-right">
+
+        <span id="userName" class="header-user">
+            Loading...
+        </span>
+
+        <button
+            id="menuButton"
+            class="menu-button"
+            type="button"
+            aria-label="Open menu"
+            aria-expanded="false"
+        >
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+    </div>
+
+</header>
+
+<div id="menuOverlay" class="menu-overlay"></div>
+
+<aside id="sideMenu" class="side-menu">
+
+    <div class="side-menu-header">
+
+        <a href="dashboard.html" class="brand-logo">
+            sugercane.
+        </a>
+
+        <button
+            id="closeMenu"
+            class="close-menu"
+            type="button"
+            aria-label="Close menu"
+        >
+            ×
+        </button>
+
+    </div>
+
+    <nav class="menu-navigation">
+
+        <a href="dashboard.html" class="menu-link">
+            Dashboard
+        </a>
+
+        <a href="wallet.html" class="menu-link">
+            Wallet
+        </a>
+
+        <a href="transactions.html" class="menu-link">
+            Transactions
+        </a>
+
+        <a href="referrals.html" class="menu-link active">
+            Referrals
+        </a>
+
+        <a href="profile.html" class="menu-link">
+            Profile
+        </a>
+
+    </nav>
+
+    <button
+        id="logoutButton"
+        class="logout-button"
+        type="button"
+    >
+        Log out
+    </button>
+
+</aside>
+
+
+<main class="dashboard-main referrals-main">
+
+    <section class="welcome-section">
+
+        <p class="eyebrow">
+            Referrals
+        </p>
+
+        <h1>
+            Grow together.
+        </h1>
+
+        <p>
+            Invite people to Sugercane and grow your network.
+        </p>
+
+    </section>
+
+
+    <section class="referral-hero">
+
+        <div class="referral-hero-content">
+
+            <span class="card-label">
+                Your referral code
+            </span>
+
+            <div class="referral-code-display">
+
+                <strong id="referralCode">
+                    Loading...
+                </strong>
+
+                <button
+                    id="copyReferral"
+                    type="button"
+                >
+                    Copy
+                </button>
+
+            </div>
+
+            <p id="copyMessage" class="copy-message"></p>
+
+        </div>
+
+    </section>
+
+
+    <section class="referral-stats-grid">
+
+        <article class="referral-stat-card">
+
+            <span>
+                Direct referrals
+            </span>
+
+            <strong id="directReferrals">
+                0
+            </strong>
+
+            <small>
+                People you directly invited
+            </small>
+
+        </article>
+
+
+        <article class="referral-stat-card">
+
+            <span>
+                Total referrals
+            </span>
+
+            <strong id="totalReferrals">
+                0
+            </strong>
+
+            <small>
+                Your current referral network
+            </small>
+
+        </article>
+
+
+        <article class="referral-stat-card earnings-card">
+
+            <span>
+                Referral earnings
+            </span>
+
+            <strong id="referralEarnings">
+                KSh 0.00
+            </strong>
+
+            <small>
+                Earned from referrals
+            </small>
+
+        </article>
+
+    </section>
+
+
+    <section class="referral-info-card">
+
+        <p class="eyebrow">
+            How it works
+        </p>
+
+        <h2>
+            Share your code.
+        </h2>
+
+        <p>
+            Give your referral code to someone you want to invite.
+            When they create an account using your code, they'll become
+            part of your referral network.
+        </p>
+
+    </section>
+
+</main>
+
+
+<script src="referrals.js"></script>
+
+</body>
+</html>

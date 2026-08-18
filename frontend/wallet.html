@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        http-equiv="Content-Security-Policy"
+        content="default-src 'self';
+        style-src 'self';
+        img-src 'self' data:;
+        font-src 'self';
+        script-src 'self';
+        connect-src 'self' http://127.0.0.1:8000;
+        object-src 'none';
+        base-uri 'self';
+        form-action 'self';"
+    >
+
+    <meta
+        name="referrer"
+        content="strict-origin-when-cross-origin"
+    >
+
+    <title>Sugercane — Wallet</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="wallet.css">
+</head>
+
+<body class="dashboard-page">
+
+<header class="dashboard-header">
+
+    <a href="dashboard.html" class="brand-logo">
+        sugercane.
+    </a>
+
+    <div class="header-right">
+
+        <span id="userName" class="header-user">
+            Loading...
+        </span>
+
+        <button
+            id="menuButton"
+            class="menu-button"
+            type="button"
+            aria-label="Open menu"
+            aria-expanded="false"
+        >
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+    </div>
+
+</header>
+
+
+<div id="menuOverlay" class="menu-overlay"></div>
+
+
+<aside id="sideMenu" class="side-menu">
+
+    <div class="side-menu-header">
+
+        <a href="dashboard.html" class="brand-logo">
+            sugercane.
+        </a>
+
+        <button
+            id="closeMenu"
+            class="close-menu"
+            type="button"
+            aria-label="Close menu"
+        >
+            ×
+        </button>
+
+    </div>
+
+
+    <nav class="menu-navigation">
+
+        <a href="dashboard.html" class="menu-link">
+            Dashboard
+        </a>
+
+        <a href="wallet.html" class="menu-link active">
+            Wallet
+        </a>
+
+        <a href="transactions.html" class="menu-link">
+            Transactions
+        </a>
+
+        <a href="referrals.html" class="menu-link">
+            Referrals
+        </a>
+
+        <a href="profile.html" class="menu-link">
+            Profile
+        </a>
+
+    </nav>
+
+
+    <button
+        id="logoutButton"
+        class="logout-button"
+        type="button"
+    >
+        Log out
+    </button>
+
+</aside>
+
+
+<main class="dashboard-main wallet-main">
+
+    <section class="welcome-section">
+
+        <p class="eyebrow">
+            Wallet
+        </p>
+
+        <h1>
+            Your money,
+            <br>
+            in one place.
+        </h1>
+
+        <p>
+            Manage your Sugercane wallet and view your current balance.
+        </p>
+
+    </section>
+
+
+    <section class="wallet-layout">
+
+        <article class="wallet-balance-card">
+
+            <div class="wallet-card-top">
+
+                <span class="card-label">
+                    Available balance
+                </span>
+
+                <span
+                    id="walletStatus"
+                    class="wallet-status"
+                >
+                    Active
+                </span>
+
+            </div>
+
+
+            <div class="wallet-balance">
+
+                <span id="walletCurrency">
+                    KSh
+                </span>
+
+                <strong id="walletBalance">
+                    0.00
+                </strong>
+
+            </div>
+
+
+            <div class="wallet-card-bottom">
+
+                <span>
+                    Wallet currency
+                </span>
+
+                <strong id="walletCurrencyBottom">
+                    KES
+                </strong>
+
+            </div>
+
+        </article>
+
+
+        <section class="wallet-actions-card">
+
+            <div>
+
+                <span class="card-label">
+                    Manage wallet
+                </span>
+
+                <h2>
+                    What would you like to do?
+                </h2>
+
+            </div>
+
+
+            <div class="wallet-action-buttons">
+
+                <button
+                    type="button"
+                    class="wallet-action primary-action"
+                    disabled
+                >
+                    <span>Deposit</span>
+                    <small>Coming soon</small>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="wallet-action secondary-action"
+                    disabled
+                >
+                    <span>Withdraw</span>
+                    <small>Coming soon</small>
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <section class="wallet-info-card">
+
+            <span class="card-label">
+                About your wallet
+            </span>
+
+            <h2>
+                Your balance is calculated from your transaction ledger.
+            </h2>
+
+            <p>
+                Your wallet balance reflects completed credits and debits
+                recorded against your account. Deposits and withdrawals will
+                become available once the corresponding transaction services
+                are enabled.
+            </p>
+
+        </section>
+
+    </section>
+
+</main>
+
+
+<script src="wallet.js"></script>
+
+</body>
+</html>

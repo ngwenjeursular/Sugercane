@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self';
+          style-src 'self';
+          img-src 'self' data:;
+          font-src 'self';
+          script-src 'self';
+          connect-src 'self' http://127.0.0.1:8000;
+          object-src 'none';
+          base-uri 'self';
+          form-action 'self';">
+
+    <title>Sugercane — Transactions</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="transactions.css">
+</head>
+
+<body class="dashboard-page">
+
+<header class="dashboard-header">
+
+    <a href="dashboard.html" class="brand-logo">
+        sugercane.
+    </a>
+
+    <div class="header-right">
+
+        <span id="userName" class="header-user">
+            Loading...
+        </span>
+
+        <button id="menuButton"
+                class="menu-button"
+                aria-label="Open menu">
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </button>
+
+    </div>
+
+</header>
+
+
+<div id="menuOverlay" class="menu-overlay"></div>
+
+
+<aside id="sideMenu" class="side-menu">
+
+    <div class="side-menu-header">
+
+        <a href="dashboard.html" class="brand-logo">
+            sugercane.
+        </a>
+
+        <button id="closeMenu"
+                class="close-menu">
+            ×
+        </button>
+
+    </div>
+
+    <nav class="menu-navigation">
+
+        <a href="dashboard.html" class="menu-link">
+            Dashboard
+        </a>
+
+        <a href="wallet.html" class="menu-link">
+            Wallet
+        </a>
+
+        <a href="transactions.html" class="menu-link active">
+            Transactions
+        </a>
+
+        <a href="referrals.html" class="menu-link">
+            Referrals
+        </a>
+
+        <a href="profile.html" class="menu-link">
+            Profile
+        </a>
+
+    </nav>
+
+    <button id="logoutButton"
+            class="logout-button">
+        Log out
+    </button>
+
+</aside>
+
+
+<main class="dashboard-main">
+
+    <section class="welcome-section">
+
+        <p class="eyebrow">
+            Activity
+        </p>
+
+        <h1>
+            Transaction history.
+        </h1>
+
+        <p>
+            Every completed, pending and future wallet transaction will appear here.
+        </p>
+
+    </section>
+
+
+    <section class="transactions-page-card">
+
+        <div class="transactions-page-header">
+
+            <h2>
+                Recent activity
+            </h2>
+
+            <span id="transactionCount">
+                0 transactions
+            </span>
+
+        </div>
+
+        <div id="transactionsList"
+             class="transactions-page-list">
+
+            <div class="empty-state">
+                No transactions yet.
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+<script src="transactions.js"></script>
+
+</body>
+</html>

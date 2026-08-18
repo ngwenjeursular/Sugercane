@@ -1,0 +1,674 @@
+/* =========================================================
+   SUGERCANE DASHBOARD
+   ========================================================= */
+
+.dashboard-page {
+    min-height: 100vh;
+    background: #f4f7f2;
+    color: #172019;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.dashboard-header {
+    height: 72px;
+    padding: 0 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: rgba(255, 255, 255, 0.94);
+    border-bottom: 1px solid #dfe8df;
+
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.header-user {
+    font-size: 14px;
+    color: #536157;
+}
+
+
+/* =========================================================
+   HAMBURGER
+   ========================================================= */
+
+.menu-button {
+    width: 42px;
+    height: 42px;
+
+    border: 1px solid #d7e1d7;
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.menu-button:hover {
+    background: #edf5ed;
+    border-color: #b8ceb9;
+    transform: translateY(-1px);
+}
+
+.menu-button span {
+    width: 17px;
+    height: 1.5px;
+    background: #17351e;
+}
+
+
+/* =========================================================
+   SIDE MENU
+   ========================================================= */
+
+.side-menu {
+    position: fixed;
+    z-index: 1000;
+
+    top: 0;
+    right: -340px;
+
+    width: 320px;
+    height: 100vh;
+
+    background: #ffffff;
+
+    box-shadow: -15px 0 50px rgba(25, 55, 32, 0.12);
+
+    transition: right 0.25s ease;
+
+    padding: 28px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.side-menu.open {
+    right: 0;
+}
+
+.side-menu-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.close-menu {
+    border: 0;
+    background: none;
+
+    color: #27452e;
+
+    font-size: 30px;
+    cursor: pointer;
+
+    line-height: 1;
+}
+
+.menu-navigation {
+    margin-top: 50px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.menu-link {
+    padding: 14px;
+
+    text-decoration: none;
+    color: #536157;
+
+    border-radius: 10px;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.menu-link:hover {
+    background: #f0f6f0;
+    color: #24552d;
+}
+
+.menu-link.active {
+    background: #e7f1e7;
+    color: #1f5a2b;
+    font-weight: 600;
+}
+
+.logout-button {
+    margin-top: auto;
+
+    padding: 13px 14px;
+
+    border: 1px solid #d8e1d8;
+    background: #ffffff;
+
+    color: #526056;
+
+    cursor: pointer;
+    border-radius: 10px;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.logout-button:hover {
+    background: #fff4f2;
+    border-color: #efd3ce;
+    color: #a5483c;
+}
+
+.menu-overlay {
+    position: fixed;
+    inset: 0;
+
+    z-index: 999;
+
+    background: rgba(16, 35, 20, 0.32);
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition: opacity 0.25s ease;
+}
+
+.menu-overlay.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+
+/* =========================================================
+   MAIN
+   ========================================================= */
+
+.dashboard-main {
+    width: min(1100px, 90%);
+
+    margin: 0 auto;
+
+    padding: 70px 0 90px;
+}
+
+.welcome-section {
+    margin-bottom: 42px;
+}
+
+.welcome-section .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    color: #56805d;
+
+    margin-bottom: 10px;
+}
+
+.welcome-section h1 {
+    font-size: clamp(34px, 5vw, 56px);
+
+    line-height: 1.05;
+
+    margin: 0 0 14px;
+
+    font-weight: 500;
+
+    letter-spacing: -0.035em;
+}
+
+.welcome-section h1 span {
+    color: #286436;
+}
+
+.welcome-section p {
+    color: #6a756c;
+
+    max-width: 550px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   GRID
+   ========================================================= */
+
+.dashboard-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 20px;
+}
+
+.dashboard-card {
+    background: #ffffff;
+
+    border: 1px solid #dfe8df;
+
+    border-radius: 20px;
+
+    padding: 28px;
+
+    box-shadow:
+        0 5px 20px rgba(31, 67, 38, 0.035);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 30px rgba(31, 67, 38, 0.07);
+}
+
+.transactions-card {
+    grid-column: 1 / -1;
+}
+
+.card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.card-label {
+    display: block;
+
+    color: #718074;
+
+    font-size: 12px;
+
+    margin-bottom: 12px;
+
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.card-header h2 {
+    margin: 0;
+
+    font-weight: 500;
+
+    letter-spacing: -0.02em;
+}
+
+
+/* =========================================================
+   WALLET
+   ========================================================= */
+
+.wallet-card {
+    background:
+        linear-gradient(
+            145deg,
+            #164d27 0%,
+            #236636 55%,
+            #347946 100%
+        );
+
+    border: none;
+
+    color: #ffffff;
+
+    position: relative;
+    overflow: hidden;
+}
+
+.wallet-card::after {
+    content: "";
+
+    position: absolute;
+
+    width: 220px;
+    height: 220px;
+
+    right: -90px;
+    bottom: -110px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.07);
+}
+
+.wallet-card .card-label {
+    color: rgba(255, 255, 255, 0.68);
+}
+
+.wallet-card h2 {
+    font-size: clamp(34px, 4vw, 42px);
+
+    letter-spacing: -0.04em;
+}
+
+.wallet-status {
+    padding: 6px 11px;
+
+    border-radius: 20px;
+
+    background: rgba(255, 255, 255, 0.14);
+
+    color: #e4f5e5;
+
+    font-size: 12px;
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.wallet-actions {
+    margin-top: 35px;
+
+    display: flex;
+    gap: 10px;
+}
+
+.primary-action,
+.secondary-action {
+    padding: 12px 20px;
+
+    border-radius: 9px;
+
+    cursor: pointer;
+
+    font: inherit;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.primary-action {
+    border: 1px solid #ffffff;
+
+    background: #ffffff;
+
+    color: #1c5a2b;
+}
+
+.primary-action:hover {
+    background: #eef7ef;
+
+    transform: translateY(-1px);
+}
+
+.secondary-action {
+    border: 1px solid rgba(255, 255, 255, 0.35);
+
+    background: transparent;
+
+    color: #ffffff;
+}
+
+.secondary-action:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+
+/* =========================================================
+   REFERRALS
+   ========================================================= */
+
+.referral-card {
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff 0%,
+            #f7fbf6 100%
+        );
+}
+
+.referral-card .card-header h2 {
+    color: #245d2f;
+}
+
+.referral-code-box {
+    margin-top: 25px;
+
+    padding: 16px;
+
+    background: #edf5ed;
+
+    border: 1px solid #dbe9dc;
+
+    border-radius: 11px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+}
+
+.referral-code-box span {
+    display: block;
+
+    font-size: 12px;
+
+    color: #718074;
+
+    margin-bottom: 5px;
+}
+
+.referral-code-box strong {
+    color: #245b2f;
+
+    letter-spacing: 0.08em;
+}
+
+.referral-code-box button {
+    border: 0;
+
+    background: #ffffff;
+
+    color: #286436;
+
+    padding: 8px 12px;
+
+    border-radius: 7px;
+
+    cursor: pointer;
+
+    font-weight: 600;
+
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+.referral-code-box button:hover {
+    background: #286436;
+    color: #ffffff;
+}
+
+.referral-stats {
+    margin-top: 25px;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 20px;
+}
+
+.referral-stats span {
+    display: block;
+
+    color: #718074;
+
+    font-size: 12px;
+
+    margin-bottom: 6px;
+}
+
+.referral-stats strong {
+    font-size: 20px;
+
+    color: #234b2b;
+}
+
+
+/* =========================================================
+   TRANSACTIONS
+   ========================================================= */
+
+.transactions-list {
+    margin-top: 20px;
+}
+
+.empty-state {
+    padding: 45px 10px;
+
+    text-align: center;
+
+    color: #7a857c;
+}
+
+.transaction-row {
+    padding: 18px 0;
+
+    border-bottom: 1px solid #e6ede6;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+.transaction-row:last-child {
+    border-bottom: 0;
+}
+
+.transaction-row strong,
+.transaction-row span {
+    display: block;
+}
+
+.transaction-row strong {
+    color: #243b28;
+}
+
+.transaction-row span {
+    margin-top: 5px;
+
+    color: #7a857c;
+
+    font-size: 12px;
+}
+
+.transaction-amount {
+    text-align: right;
+}
+
+.transaction-amount small {
+    display: block;
+
+    color: #7a857c;
+
+    margin-top: 4px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .dashboard-header {
+        padding: 0 6%;
+    }
+
+    .header-user {
+        display: none;
+    }
+
+    .dashboard-main {
+        width: 88%;
+
+        padding: 45px 0 65px;
+    }
+
+    .welcome-section {
+        margin-bottom: 30px;
+    }
+
+    .welcome-section h1 {
+        font-size: 38px;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .transactions-card {
+        grid-column: auto;
+    }
+
+    .dashboard-card {
+        padding: 22px;
+
+        border-radius: 17px;
+    }
+
+    .wallet-card h2 {
+        font-size: 32px;
+    }
+
+    .wallet-actions {
+        flex-direction: column;
+    }
+
+    .primary-action,
+    .secondary-action {
+        width: 100%;
+    }
+
+    .side-menu {
+        width: min(320px, 85vw);
+    }
+
+    .transaction-row {
+        align-items: flex-start;
+
+        gap: 15px;
+    }
+
+    .referral-code-box {
+        align-items: flex-start;
+    }
+}

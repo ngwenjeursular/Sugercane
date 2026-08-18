@@ -1,0 +1,1568 @@
+/* =========================================================
+   GLOBAL
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --green-dark: #102d1f;
+    --green: #1e5b3a;
+    --green-light: #dcebd9;
+    --cream: #f5f1e8;
+    --white: #ffffff;
+    --text: #172019;
+    --muted: #718078;
+    --border: #dce3dd;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+
+    font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    color: var(--text);
+}
+
+
+/* =========================================================
+   LANDING PAGE
+   ========================================================= */
+
+.hero {
+    position: relative;
+
+    min-height: 100vh;
+    overflow: hidden;
+
+    display: flex;
+    align-items: center;
+
+    background:
+        radial-gradient(
+            circle at 75% 25%,
+            rgba(87, 143, 93, 0.45),
+            transparent 30%
+        ),
+        linear-gradient(
+            125deg,
+            #0a2117 0%,
+            #123a27 48%,
+            #20583a 100%
+        );
+}
+
+.hero::before {
+    content: "";
+
+    position: absolute;
+
+    width: 650px;
+    height: 650px;
+
+    right: -180px;
+    bottom: -260px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.hero::after {
+    content: "";
+
+    position: absolute;
+
+    width: 350px;
+    height: 350px;
+
+    left: -180px;
+    bottom: -180px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+.navbar {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    z-index: 10;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 28px 6vw;
+}
+
+.logo,
+.brand-logo {
+    color: var(--white);
+
+    text-decoration: none;
+
+    font-size: 1.35rem;
+    font-weight: 800;
+
+    letter-spacing: -0.04em;
+}
+
+.nav-link {
+    color: var(--white);
+
+    text-decoration: none;
+
+    font-size: 0.9rem;
+    font-weight: 600;
+
+    padding: 11px 20px;
+
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 999px;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.nav-link:hover {
+    background: rgba(255, 255, 255, 0.12);
+
+    border-color: rgba(255, 255, 255, 0.7);
+}
+
+
+/* =========================================================
+   HERO CONTENT
+   ========================================================= */
+
+.hero-content {
+    position: relative;
+
+    z-index: 2;
+
+    width: min(1100px, 88%);
+
+    margin: 0 auto;
+
+    padding-top: 50px;
+}
+
+.eyebrow {
+    display: inline-flex;
+
+    align-items: center;
+    gap: 9px;
+
+    margin-bottom: 28px;
+
+    color: #cfe5ce;
+
+    font-size: 0.76rem;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+}
+
+.eyebrow::before {
+    content: "";
+
+    width: 28px;
+    height: 1px;
+
+    background: #a9cbaa;
+}
+
+.hero h1 {
+    max-width: 900px;
+
+    color: var(--white);
+
+    font-size: clamp(4rem, 10vw, 8.5rem);
+    line-height: 0.88;
+
+    letter-spacing: -0.075em;
+
+    font-weight: 800;
+}
+
+.hero-description {
+    max-width: 560px;
+
+    margin-top: 36px;
+
+    color: rgba(255, 255, 255, 0.72);
+
+    font-size: clamp(1rem, 2vw, 1.2rem);
+
+    line-height: 1.7;
+}
+
+
+/* =========================================================
+   CTA
+   ========================================================= */
+
+.cta {
+    display: inline-flex;
+
+    align-items: center;
+    gap: 14px;
+
+    margin-top: 42px;
+
+    color: var(--green-dark);
+
+    background: var(--white);
+
+    padding: 16px 23px;
+
+    border-radius: 999px;
+
+    text-decoration: none;
+
+    font-size: 0.95rem;
+    font-weight: 750;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.cta span {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 28px;
+    height: 28px;
+
+    border-radius: 50%;
+
+    background: var(--green-dark);
+    color: white;
+
+    font-size: 0.9rem;
+}
+
+.cta:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 14px 35px rgba(0, 0, 0, 0.2);
+}
+
+
+/* =========================================================
+   DECORATIVE ELEMENTS
+   ========================================================= */
+
+.side-text {
+    position: absolute;
+
+    right: 34px;
+    top: 50%;
+
+    transform:
+        rotate(90deg)
+        translateX(50%);
+
+    color: rgba(255, 255, 255, 0.28);
+
+    font-size: 0.65rem;
+    font-weight: 700;
+
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+}
+
+.hero-bottom {
+    position: absolute;
+
+    z-index: 2;
+
+    left: 6vw;
+    right: 6vw;
+    bottom: 30px;
+
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+}
+
+.scroll-text {
+    color: rgba(255, 255, 255, 0.5);
+
+    font-size: 0.72rem;
+
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.status {
+    display: flex;
+
+    align-items: center;
+    gap: 8px;
+
+    color: rgba(255, 255, 255, 0.65);
+
+    font-size: 0.72rem;
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #9acb9a;
+
+    box-shadow:
+        0 0 0 5px rgba(154, 203, 154, 0.08);
+}
+
+
+/* =========================================================
+   AUTHENTICATION PAGE
+   ========================================================= */
+
+.auth-page {
+    display: grid;
+
+    place-items: center;
+
+    padding: 30px;
+
+    background: var(--cream);
+}
+
+.auth-wrapper {
+    width: min(1050px, 100%);
+
+    min-height: 650px;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    overflow: hidden;
+
+    background: var(--white);
+
+    border-radius: 28px;
+
+    box-shadow:
+        0 30px 80px rgba(16, 45, 31, 0.13);
+}
+
+
+/* =========================================================
+   AUTH BRAND PANEL
+   ========================================================= */
+
+.auth-brand {
+    position: relative;
+
+    display: flex;
+
+    flex-direction: column;
+    justify-content: space-between;
+
+    padding: 50px;
+
+    background:
+        radial-gradient(
+            circle at 80% 20%,
+            rgba(117, 168, 120, 0.25),
+            transparent 30%
+        ),
+        linear-gradient(
+            145deg,
+            #0b2518,
+            #20583a
+        );
+
+    color: white;
+}
+
+.auth-brand .brand-logo {
+    color: white;
+}
+
+.brand-copy {
+    position: relative;
+
+    z-index: 2;
+}
+
+.brand-copy h1 {
+    max-width: 420px;
+
+    font-size: clamp(3rem, 5vw, 5rem);
+
+    line-height: 0.95;
+
+    letter-spacing: -0.07em;
+}
+
+.brand-copy p {
+    max-width: 380px;
+
+    margin-top: 25px;
+
+    color: rgba(255, 255, 255, 0.65);
+
+    line-height: 1.7;
+}
+
+.brand-footer {
+    color: rgba(255, 255, 255, 0.4);
+
+    font-size: 0.75rem;
+}
+
+
+/* =========================================================
+   AUTH FORM
+   ========================================================= */
+
+.auth-panel {
+    display: flex;
+
+    align-items: center;
+
+    padding: 60px;
+}
+
+.auth-content {
+    width: 100%;
+
+    max-width: 400px;
+
+    margin: auto;
+}
+
+.back {
+    display: inline-block;
+
+    margin-bottom: 55px;
+
+    color: var(--muted);
+
+    text-decoration: none;
+
+    font-size: 0.85rem;
+}
+
+.back:hover {
+    color: var(--text);
+}
+
+.auth-content h2 {
+    font-size: 2.5rem;
+
+    letter-spacing: -0.05em;
+}
+
+.subtitle {
+    margin-top: 10px;
+
+    color: var(--muted);
+
+    line-height: 1.6;
+}
+
+.auth-content form {
+    margin-top: 35px;
+}
+
+.field {
+    margin-bottom: 20px;
+}
+
+.field label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 0.82rem;
+
+    font-weight: 700;
+}
+
+.field input {
+    width: 100%;
+
+    padding: 15px 16px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 10px;
+
+    outline: none;
+
+    font: inherit;
+
+    background: #fafcfb;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.field input:focus {
+    border-color: var(--green);
+
+    box-shadow:
+        0 0 0 4px rgba(30, 91, 58, 0.1);
+}
+
+.auth-content button {
+    width: 100%;
+
+    margin-top: 10px;
+
+    padding: 16px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    color: white;
+
+    background: var(--green-dark);
+
+    font: inherit;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+.auth-content button:hover {
+    background: var(--green);
+
+    transform: translateY(-1px);
+}
+
+.switch {
+    margin-top: 25px;
+
+    text-align: center;
+
+    color: var(--muted);
+
+    font-size: 0.85rem;
+}
+
+.switch a {
+    color: var(--green);
+
+    font-weight: 700;
+
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+    .auth-page {
+        padding: 0;
+    }
+
+    .auth-wrapper {
+        min-height: 100vh;
+
+        border-radius: 0;
+
+        grid-template-columns: 1fr;
+    }
+
+    .auth-brand {
+        min-height: 300px;
+
+        padding: 30px;
+    }
+
+    .brand-copy h1 {
+        font-size: 3.5rem;
+    }
+
+    .brand-footer {
+        display: none;
+    }
+
+    .auth-panel {
+        padding: 40px 30px;
+    }
+
+    .back {
+        margin-bottom: 35px;
+    }
+}
+
+@media (max-width: 700px) {
+
+    .navbar {
+        padding: 22px 6%;
+    }
+
+    .hero-content {
+        width: 88%;
+    }
+
+    .hero h1 {
+        font-size: clamp(4rem, 19vw, 6rem);
+    }
+
+    .hero-description {
+        font-size: 0.98rem;
+    }
+
+    .side-text {
+        display: none;
+    }
+
+    .hero-bottom {
+        left: 6%;
+        right: 6%;
+    }
+
+    .growth-animation {
+    right: 3%;
+    bottom: 8%;
+    transform: scale(0.7);
+    transform-origin: bottom right;
+    }
+}
+
+/* =========================================================
+   FORM HELP TEXT
+   ========================================================= */
+
+.field-help {
+    display: block;
+
+    margin-top: 7px;
+
+    color: var(--muted);
+
+    font-size: 0.72rem;
+
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   PHONE INPUT
+   ========================================================= */
+
+.field input[type="tel"] {
+    letter-spacing: 0.02em;
+}
+
+
+/* =========================================================
+   INVALID FORM INPUT
+   ========================================================= */
+
+.field input:invalid:not(:placeholder-shown) {
+    border-color: #b85c5c;
+}
+
+.field input:valid:not(:placeholder-shown) {
+    border-color: var(--green);
+}
+
+/* =========================================================
+   GROWING SPROUT ANIMATION
+   ========================================================= */
+
+.growth-animation {
+    position: absolute;
+
+    right: 12%;
+    bottom: 7%;
+
+    width: 180px;
+    height: 260px;
+
+    z-index: 1;
+
+    pointer-events: none;
+}
+
+
+/* -------------------------
+   Soil
+   ------------------------- */
+
+.growth-animation .soil {
+    position: absolute;
+
+    bottom: 0;
+    left: 50%;
+
+    width: 150px;
+    height: 28px;
+
+    transform: translateX(-50%);
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle at 25% 45%,
+            #4d3826 0 3px,
+            transparent 4px
+        ),
+        radial-gradient(
+            circle at 65% 35%,
+            #60462d 0 3px,
+            transparent 4px
+        ),
+        radial-gradient(
+            circle at 80% 60%,
+            #3b2c20 0 2px,
+            transparent 3px
+        ),
+        #38291d;
+
+    opacity: 0;
+
+    animation:
+        soil-appear 0.8s ease forwards 0.2s;
+}
+
+
+/* -------------------------
+   Stem
+   ------------------------- */
+
+.growth-animation .stem {
+    position: absolute;
+
+    left: 50%;
+    bottom: 15px;
+
+    width: 7px;
+    height: 0;
+
+    transform:
+        translateX(-50%)
+        rotate(-2deg);
+
+    transform-origin: bottom center;
+
+    border-radius: 10px;
+
+    background: linear-gradient(
+        to right,
+        #315c32,
+        #7eaa5d,
+        #315c32
+    );
+
+    animation:
+        stem-grow 2.2s cubic-bezier(.22,.8,.3,1) forwards;
+}
+
+
+/* -------------------------
+   Leaves
+   ------------------------- */
+
+.growth-animation .leaf {
+    position: absolute;
+
+    width: 0;
+    height: 0;
+
+    opacity: 0;
+
+    transform-origin: bottom center;
+
+    background: linear-gradient(
+        135deg,
+        #9fc96d,
+        #3c743f
+    );
+
+    border-radius: 100% 0 100% 0;
+}
+
+
+/* Left leaf */
+
+.growth-animation .leaf-left {
+    left: -3px;
+    bottom: 72px;
+
+    transform:
+        rotate(-48deg)
+        scale(0);
+
+    animation:
+        leaf-left-grow 1.1s cubic-bezier(.2,.8,.3,1) forwards 1.35s;
+}
+
+
+/* Right leaf */
+
+.growth-animation .leaf-right {
+    right: -2px;
+    bottom: 112px;
+
+    transform:
+        rotate(35deg)
+        scale(0);
+
+    animation:
+        leaf-right-grow 1.1s cubic-bezier(.2,.8,.3,1) forwards 1.7s;
+}
+
+
+/* =========================================================
+   ANIMATION KEYFRAMES
+   ========================================================= */
+
+@keyframes stem-grow {
+
+    0% {
+        height: 0;
+    }
+
+    70% {
+        height: 180px;
+    }
+
+    85% {
+        height: 168px;
+    }
+
+    100% {
+        height: 175px;
+    }
+}
+
+
+@keyframes leaf-left-grow {
+
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 0;
+    }
+
+    70% {
+        width: 52px;
+        height: 25px;
+        opacity: 1;
+    }
+
+    100% {
+        width: 48px;
+        height: 24px;
+        opacity: 1;
+
+        transform:
+            rotate(-48deg)
+            scale(1);
+    }
+}
+
+
+@keyframes leaf-right-grow {
+
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 0;
+    }
+
+    70% {
+        width: 58px;
+        height: 28px;
+        opacity: 1;
+    }
+
+    100% {
+        width: 54px;
+        height: 27px;
+        opacity: 1;
+
+        transform:
+            rotate(35deg)
+            scale(1);
+    }
+}
+
+
+@keyframes soil-appear {
+
+    from {
+        opacity: 0;
+        transform:
+            translateX(-50%)
+            scale(0.7);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateX(-50%)
+            scale(1);
+    }
+}
+
+
+/* =========================================================
+   SUBTLE CONTINUOUS MOVEMENT
+   ========================================================= */
+
+.growth-animation .stem {
+    animation:
+        stem-grow 2.2s cubic-bezier(.22,.8,.3,1) forwards,
+        gentle-sway 4s ease-in-out 2.5s infinite;
+}
+
+
+@keyframes gentle-sway {
+
+    0%,
+    100% {
+        transform:
+            translateX(-50%)
+            rotate(-2deg);
+    }
+
+    50% {
+        transform:
+            translateX(-50%)
+            rotate(2deg);
+    }
+}
+
+
+/* =========================================================
+   SUGARCANE GROWTH ANIMATION
+   ========================================================= */
+
+.growth-animation {
+    position: absolute;
+
+    right: 9%;
+    bottom: 5%;
+
+    width: 230px;
+    height: 390px;
+
+    z-index: 1;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   SOIL
+   ========================================================= */
+
+.growth-animation .soil {
+    position: absolute;
+
+    left: 50%;
+    bottom: 0;
+
+    width: 180px;
+    height: 34px;
+
+    transform: translateX(-50%);
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle at 18% 45%,
+            #62472d 0 3px,
+            transparent 4px
+        ),
+        radial-gradient(
+            circle at 37% 65%,
+            #493521 0 2px,
+            transparent 3px
+        ),
+        radial-gradient(
+            circle at 57% 35%,
+            #6d4d30 0 3px,
+            transparent 4px
+        ),
+        radial-gradient(
+            circle at 82% 55%,
+            #3b2b20 0 3px,
+            transparent 4px
+        ),
+        #38291d;
+
+    opacity: 0;
+
+    animation:
+        cane-soil-appear 0.7s ease forwards 0.1s;
+}
+
+
+/* =========================================================
+   MAIN CANE
+   ========================================================= */
+
+.cane {
+    position: absolute;
+
+    left: 50%;
+    bottom: 15px;
+
+    width: 15px;
+    height: 0;
+
+    transform:
+        translateX(-50%)
+        rotate(-3deg);
+
+    transform-origin: bottom center;
+
+    border-radius: 9px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #315c32 0%,
+            #689947 25%,
+            #9bc766 48%,
+            #679447 72%,
+            #315c32 100%
+        );
+
+    box-shadow:
+        inset 2px 0 rgba(255, 255, 255, 0.16);
+
+    animation:
+        cane-grow 2.6s cubic-bezier(.18, .78, .28, 1) forwards,
+        cane-sway 5s ease-in-out 3s infinite;
+}
+
+
+/* =========================================================
+   CANE SEGMENTS
+   ========================================================= */
+
+.cane::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    border-radius: inherit;
+
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            transparent 0,
+            transparent 28px,
+            rgba(38, 77, 34, 0.72) 28px,
+            rgba(38, 77, 34, 0.72) 32px
+        );
+}
+
+
+/* Cane joints */
+
+.cane::after {
+    content: "";
+
+    position: absolute;
+
+    left: -2px;
+    right: -2px;
+
+    top: 27px;
+
+    height: 5px;
+
+    border-radius: 50%;
+
+    background: rgba(190, 216, 130, 0.7);
+
+    box-shadow:
+        0 29px rgba(190, 216, 130, 0.7),
+        0 58px rgba(190, 216, 130, 0.7),
+        0 87px rgba(190, 216, 130, 0.7),
+        0 116px rgba(190, 216, 130, 0.7),
+        0 145px rgba(190, 216, 130, 0.7),
+        0 174px rgba(190, 216, 130, 0.7),
+        0 203px rgba(190, 216, 130, 0.7);
+}
+
+
+/* =========================================================
+   ALL LEAVES
+   ========================================================= */
+
+.cane-leaf {
+    position: absolute;
+
+    width: 0;
+    height: 0;
+
+    opacity: 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            #315e31 0%,
+            #719d49 45%,
+            #a2c96b 53%,
+            #47763a 100%
+        );
+
+    border-radius:
+        100% 0 100% 0;
+
+    transform-origin: bottom center;
+
+    box-shadow:
+        inset -2px 0 rgba(255, 255, 255, 0.12);
+}
+
+
+/* =========================================================
+   LEAF 1 — LOW LEFT
+   ========================================================= */
+
+.leaf-1 {
+    left: -2px;
+    bottom: 68px;
+
+    transform:
+        rotate(-62deg)
+        scale(0);
+
+    animation:
+        leaf-1-grow 0.95s cubic-bezier(.2, .8, .25, 1)
+        forwards 1.15s;
+}
+
+
+/* =========================================================
+   LEAF 2 — LOW RIGHT
+   ========================================================= */
+
+.leaf-2 {
+    right: -2px;
+    bottom: 105px;
+
+    transform:
+        rotate(57deg)
+        scale(0);
+
+    animation:
+        leaf-2-grow 0.95s cubic-bezier(.2, .8, .25, 1)
+        forwards 1.45s;
+}
+
+
+/* =========================================================
+   LEAF 3 — MID LEFT
+   ========================================================= */
+
+.leaf-3 {
+    left: -2px;
+    bottom: 145px;
+
+    transform:
+        rotate(-54deg)
+        scale(0);
+
+    animation:
+        leaf-3-grow 0.95s cubic-bezier(.2, .8, .25, 1)
+        forwards 1.75s;
+}
+
+
+/* =========================================================
+   LEAF 4 — MID RIGHT
+   ========================================================= */
+
+.leaf-4 {
+    right: -1px;
+    bottom: 180px;
+
+    transform:
+        rotate(48deg)
+        scale(0);
+
+    animation:
+        leaf-4-grow 0.95s cubic-bezier(.2, .8, .25, 1)
+        forwards 2.05s;
+}
+
+
+/* =========================================================
+   LEAF 5 — TOP
+   ========================================================= */
+
+.leaf-5 {
+    left: 2px;
+    bottom: 216px;
+
+    transform:
+        rotate(-20deg)
+        scale(0);
+
+    animation:
+        leaf-5-grow 1s cubic-bezier(.2, .8, .25, 1)
+        forwards 2.35s;
+}
+
+
+/* =========================================================
+   GROWTH ANIMATION
+   ========================================================= */
+
+@keyframes cane-grow {
+
+    0% {
+        height: 0;
+    }
+
+    65% {
+        height: 285px;
+    }
+
+    82% {
+        height: 267px;
+    }
+
+    100% {
+        height: 278px;
+    }
+}
+
+
+/* =========================================================
+   LEAF ANIMATIONS
+   ========================================================= */
+
+@keyframes leaf-1-grow {
+
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 0;
+
+        transform:
+            rotate(-62deg)
+            scale(0);
+    }
+
+    100% {
+        width: 88px;
+        height: 21px;
+        opacity: 1;
+
+        transform:
+            rotate(-62deg)
+            scale(1);
+    }
+}
+
+
+@keyframes leaf-2-grow {
+
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 0;
+
+        transform:
+            rotate(57deg)
+            scale(0);
+    }
+
+    100% {
+        width: 92px;
+        height: 22px;
+        opacity: 1;
+
+        transform:
+            rotate(57deg)
+            scale(1);
+    }
+}
+
+
+@keyframes leaf-3-grow {
+
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 0;
+
+        transform:
+            rotate(-54deg)
+            scale(0);
+    }
+
+    100% {
+        width: 82px;
+        height: 20px;
+        opacity: 1;
+
+        transform:
+            rotate(-54deg)
+            scale(1);
+    }
+}
+
+
+@keyframes leaf-4-grow {
+
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 0;
+
+        transform:
+            rotate(48deg)
+            scale(0);
+    }
+
+    100% {
+        width: 88px;
+        height: 21px;
+        opacity: 1;
+
+        transform:
+            rotate(48deg)
+            scale(1);
+    }
+}
+
+
+@keyframes leaf-5-grow {
+
+    0% {
+        width: 0;
+        height: 0;
+        opacity: 0;
+
+        transform:
+            rotate(-20deg)
+            scale(0);
+    }
+
+    100% {
+        width: 76px;
+        height: 18px;
+        opacity: 1;
+
+        transform:
+            rotate(-20deg)
+            scale(1);
+    }
+}
+
+
+/* =========================================================
+   SOIL APPEARANCE
+   ========================================================= */
+
+@keyframes cane-soil-appear {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateX(-50%)
+            scale(0.7);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateX(-50%)
+            scale(1);
+    }
+}
+
+
+/* =========================================================
+   GENTLE WIND
+   ========================================================= */
+
+@keyframes cane-sway {
+
+    0%,
+    100% {
+        transform:
+            translateX(-50%)
+            rotate(-3deg);
+    }
+
+    50% {
+        transform:
+            translateX(-50%)
+            rotate(2.5deg);
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .growth-animation {
+        right: -2%;
+        bottom: 7%;
+
+        transform: scale(0.62);
+
+        transform-origin: bottom right;
+    }
+}
+
+/* =========================================================
+   SIGNUP FORM
+   ========================================================= */
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.form-group label span {
+    color: var(--muted);
+    font-weight: 400;
+}
+
+.form-group input {
+    width: 100%;
+
+    padding: 15px 16px;
+
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    outline: none;
+
+    font: inherit;
+    background: #fafcfb;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.form-group input:focus {
+    border-color: var(--green);
+
+    box-shadow:
+        0 0 0 4px rgba(30, 91, 58, 0.1);
+}
+
+.form-group small {
+    display: block;
+
+    margin-top: 7px;
+
+    color: var(--muted);
+
+    font-size: 0.72rem;
+    line-height: 1.4;
+}
+
+
+/* =========================================================
+   FORM MESSAGE
+   ========================================================= */
+
+.form-message {
+    min-height: 20px;
+
+    margin: 12px 0;
+
+    font-size: 0.82rem;
+    line-height: 1.5;
+}
+
+.form-message.error {
+    color: #a94442;
+}
+
+.form-message.success {
+    color: var(--green);
+}
+
+
+/* =========================================================
+   BUTTON STATES
+   ========================================================= */
+
+.auth-content button:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+.auth-content button:disabled:hover {
+    transform: none;
+    background: var(--green-dark);
+}

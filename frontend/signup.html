@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+    http-equiv="Content-Security-Policy"
+    content="default-src 'self'; connect-src 'self' http://127.0.0.1:8000; style-src 'self'; img-src 'self' data:; font-src 'self'; script-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';"
+    >
+
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+
+    <title>Sugercane — Create account</title>
+    <script src="signup.js" defer></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="auth-page">
+
+    <main class="auth-wrapper">
+
+        <section class="auth-brand">
+
+            <a href="index.html" class="brand-logo">
+                sugercane.
+            </a>
+
+            <div class="brand-copy">
+                <h1>
+                    Start
+                    growing.
+                </h1>
+
+                <p>
+                    Create your Sugercane account and
+                    take the first step.
+                </p>
+            </div>
+
+            <div class="brand-footer">
+                © 2026 Sugercane
+            </div>
+
+        </section>
+
+
+        <section class="auth-panel">
+
+            <div class="auth-content">
+
+                <a href="auth.html" class="back">
+                    ← Back to sign in
+                </a>
+
+                <h2>Create account.</h2>
+
+                <p class="subtitle">
+                    Enter your details to get started.
+                </p>
+
+
+                <form id="signupForm">
+
+                <div class="form-group">
+                    <label for="fullName">Full name</label>
+                    <input
+                        type="text"
+                        id="fullName"
+                        name="full_name"
+                        placeholder="Your full name"
+                        autocomplete="name"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="phoneNumber">Phone number</label>
+                    <input
+                        type="tel"
+                        id="phoneNumber"
+                        name="phone_number"
+                        placeholder="+254 7XX XXX XXX"
+                        autocomplete="tel"
+                        inputmode="tel"
+                        required
+                    >
+                    <small>Kenyan numbers only</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Create a password"
+                        autocomplete="new-password"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm password</label>
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        name="confirm_password"
+                        placeholder="Repeat your password"
+                        autocomplete="new-password"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="referralCode">Referral code <span>(optional)</span></label>
+                    <input
+                        type="text"
+                        id="referralCode"
+                        name="referral_code"
+                        placeholder="e.g. SC-BZCMFJV6"
+                        autocomplete="off"
+                    >
+                </div>
+
+                <div id="formMessage" class="form-message" aria-live="polite"></div>
+
+                <button type="submit" id="signupButton">
+                    Create account
+                </button>
+
+                </form>
+
+                    
+
+
+                <p class="switch">
+                    Already have an account?
+                    <a href="auth.html">
+                        Sign in
+                    </a>
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="signup.js" defer></script>
+</body>
+</html>
