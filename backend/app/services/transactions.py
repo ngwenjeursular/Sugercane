@@ -22,11 +22,11 @@ def create_pending_mpesa_deposit(
     checkout_request_id: str,
 ):
     """
-    Create a pending M-Pesa deposit.
+    Creates a pending M-Pesa deposit.
 
     The wallet is NOT credited here.
-    The wallet is credited only after a successful
-    M-Pesa callback or successful server-side reconciliation.
+    The deposit is completed only after a successful
+    M-Pesa callback or a verified reconciliation.
     """
 
     existing = (
@@ -51,7 +51,9 @@ def create_pending_mpesa_deposit(
 
     wallet = (
         db.query(Wallet)
-        .filter(Wallet.user_id == user.id)
+        .filter(
+            Wallet.user_id == user.id
+        )
         .first()
     )
 
@@ -86,29 +88,37 @@ def complete_mpesa_deposit(
     recovery: bool = False,
 ):
     """
-    Complete an M-Pesa deposit safely.
+    Completes an M-Pesa deposit safely.
 
-    Normal callback:
-    - requires an M-Pesa receipt
-    - requires the callback amount
-    - requires the callback phone
-    - validates amount and phone
-    - prevents receipt reuse
+    Normal successful callback:
+    - verifies the transaction exists
+    - verifies it is still pending
+    - verifies the callback amount
+    - verifies the callback phone number
+    - verifies the M-Pesa receipt is not already used
+    - marks the transaction completed
+    - credits the wallet
+    - creates referral commissions
 
     Recovery:
-    - is only used after the server has independently queried
-      Daraja and received ResultCode == 0
+    - is only called after Safaricom independently confirms
+      ResultCode == 0 for the exact CheckoutRequestID
     - does not require CallbackMetadata
-    - uses the original transaction amount and user stored
-      in our database
-    - creates an internal recovery reference instead of
-      pretending we received an M-Pesa receipt
+    - uses the amount and user already stored in our database
+    - credits the wallet exactly once
 
-    Both paths:
-    - only process pending transactions
-    - credit the wallet once
-    - create referral commissions once
+    Failed callback:
+    - marks the transaction failed
+    - does not credit the wallet
+
+    Duplicate callback:
+    - safely ignored because completed/failed transactions
+      are not processed again.
     """
+
+    # ---------------------------------------------------------
+    # Find and lock transaction
+    # ---------------------------------------------------------
 
     transaction = (
         db.query(FinancialTransaction)
@@ -133,15 +143,16 @@ def complete_mpesa_deposit(
         return transaction, []
 
     # ---------------------------------------------------------
-    # Failed / cancelled transaction
+    # Failed / cancelled M-Pesa transaction
     # ---------------------------------------------------------
 
     if result_code != 0:
         transaction.status = "failed"
+
         return transaction, []
 
     # ---------------------------------------------------------
-    # Find the user
+    # Find the user associated with the transaction
     # ---------------------------------------------------------
 
     user = (
@@ -158,10 +169,31 @@ def complete_mpesa_deposit(
         )
 
     # ---------------------------------------------------------
-    # Normal callback validation
+    # Successful payment validation
     # ---------------------------------------------------------
 
-    if not recovery:
+    if recovery:
+        # Recovery is allowed only after the reconciliation
+        # endpoint has independently confirmed ResultCode == 0
+        # from Safaricom for this exact CheckoutRequestID.
+        #
+        # We deliberately do NOT require:
+        # - callback_amount
+        # - callback_phone
+        # - mpesa_receipt
+        #
+        # The transaction amount and user were already stored
+        # when the STK Push was created.
+        #
+        # Therefore, the recovery path does not trust the browser
+        # or any client-supplied payment information.
+
+        pass
+
+    else:
+        # -----------------------------------------------------
+        # Normal callback validation
+        # -----------------------------------------------------
 
         if not mpesa_receipt:
             raise ValueError(
@@ -181,14 +213,20 @@ def complete_mpesa_deposit(
                 "a phone number."
             )
 
-        # Amount must match the amount we originally requested.
+        # -----------------------------------------------------
+        # Verify callback amount
+        # -----------------------------------------------------
+
         if callback_amount != transaction.amount:
             raise ValueError(
                 "M-Pesa callback amount does not match "
                 "the transaction amount."
             )
 
-        # Normalize both phone numbers before comparison.
+        # -----------------------------------------------------
+        # Verify callback phone number
+        # -----------------------------------------------------
+
         expected_phone = normalize_mpesa_phone(
             user.phone_number
         )
@@ -204,11 +242,10 @@ def complete_mpesa_deposit(
             )
 
     # ---------------------------------------------------------
-    # Prevent reuse of an M-Pesa receipt
+    # Prevent M-Pesa receipt reuse
     # ---------------------------------------------------------
 
     if mpesa_receipt:
-
         existing_receipt = (
             db.query(FinancialTransaction)
             .filter(
@@ -226,7 +263,7 @@ def complete_mpesa_deposit(
             )
 
     # ---------------------------------------------------------
-    # Find wallet
+    # Find user's wallet
     # ---------------------------------------------------------
 
     wallet = (
@@ -240,24 +277,6 @@ def complete_mpesa_deposit(
     if not wallet:
         raise ValueError(
             "User does not have a wallet."
-        )
-
-    # ---------------------------------------------------------
-    # Prevent duplicate ledger credit
-    # ---------------------------------------------------------
-
-    existing_ledger = (
-        db.query(LedgerEntry)
-        .filter(
-            LedgerEntry.transaction_id
-            == transaction.id
-        )
-        .first()
-    )
-
-    if existing_ledger:
-        raise ValueError(
-            "This M-Pesa transaction already has a ledger entry."
         )
 
     # ---------------------------------------------------------
@@ -289,7 +308,7 @@ def complete_mpesa_deposit(
     db.add(ledger_entry)
 
     # ---------------------------------------------------------
-    # Referral commissions
+    # Create referral commissions
     # ---------------------------------------------------------
 
     commissions = create_referral_commissions(
@@ -313,10 +332,15 @@ def create_completed_deposit(
     Creates:
     1. A completed deposit transaction.
     2. A credit to the depositor's wallet.
-    3. Referral commissions.
+    3. Referral commissions for eligible upline users.
 
-    The API layer commits the database transaction.
+    The API layer commits the database transaction after this
+    function completes successfully.
     """
+
+    # ---------------------------------------------------------
+    # Prevent duplicate external references
+    # ---------------------------------------------------------
 
     existing = (
         db.query(FinancialTransaction)
@@ -329,14 +353,21 @@ def create_completed_deposit(
 
     if existing:
         raise ValueError(
-            "A transaction with this external reference "
-            "already exists."
+            "A transaction with this external reference already exists."
         )
+
+    # ---------------------------------------------------------
+    # Validate amount
+    # ---------------------------------------------------------
 
     if amount <= Decimal("0"):
         raise ValueError(
             "Deposit amount must be greater than zero."
         )
+
+    # ---------------------------------------------------------
+    # Find user's wallet
+    # ---------------------------------------------------------
 
     wallet = (
         db.query(Wallet)
@@ -353,6 +384,10 @@ def create_completed_deposit(
 
     completed_at = datetime.now(timezone.utc)
 
+    # ---------------------------------------------------------
+    # Create completed deposit transaction
+    # ---------------------------------------------------------
+
     transaction = FinancialTransaction(
         reference=f"DEP-{uuid4().hex[:20].upper()}",
         user_id=user.id,
@@ -367,6 +402,10 @@ def create_completed_deposit(
     db.add(transaction)
     db.flush()
 
+    # ---------------------------------------------------------
+    # Credit depositor's wallet
+    # ---------------------------------------------------------
+
     ledger_entry = LedgerEntry(
         wallet_id=wallet.id,
         transaction_id=transaction.id,
@@ -375,6 +414,10 @@ def create_completed_deposit(
     )
 
     db.add(ledger_entry)
+
+    # ---------------------------------------------------------
+    # Create referral commissions
+    # ---------------------------------------------------------
 
     commissions = create_referral_commissions(
         db=db,
@@ -394,12 +437,13 @@ def create_withdrawal_request(
     """
     Creates a pending withdrawal request.
 
-    The wallet is only debited after the external
-    payment succeeds.
+    The external payment system is responsible for actually
+    sending the money. The wallet is only debited once the
+    withdrawal is successfully completed.
     """
 
     # ---------------------------------------------------------
-    # Minimum withdrawal amount
+    # Validate withdrawal amount
     # ---------------------------------------------------------
 
     if amount < Decimal("1000.00"):
@@ -408,7 +452,7 @@ def create_withdrawal_request(
         )
 
     # ---------------------------------------------------------
-    # Idempotency
+    # Check for duplicate withdrawal requests
     # ---------------------------------------------------------
 
     existing = (
@@ -422,12 +466,11 @@ def create_withdrawal_request(
 
     if existing:
         raise ValueError(
-            "A withdrawal with this idempotency key "
-            "already exists."
+            "A withdrawal with this idempotency key already exists."
         )
 
     # ---------------------------------------------------------
-    # Find wallet
+    # Find user's wallet
     # ---------------------------------------------------------
 
     wallet = (
@@ -444,7 +487,7 @@ def create_withdrawal_request(
         )
 
     # ---------------------------------------------------------
-    # Calculate wallet balance
+    # Calculate current wallet balance
     # ---------------------------------------------------------
 
     credits = (
@@ -483,6 +526,11 @@ def create_withdrawal_request(
     # ---------------------------------------------------------
     # Account for pending withdrawals
     # ---------------------------------------------------------
+    #
+    # Pending withdrawals have not yet been debited from the
+    # ledger, so subtract them when calculating the amount
+    # the user can actually withdraw.
+    # ---------------------------------------------------------
 
     pending_withdrawals = (
         db.query(
@@ -508,15 +556,18 @@ def create_withdrawal_request(
         balance - pending_withdrawals
     )
 
+    # ---------------------------------------------------------
+    # Check available balance
+    # ---------------------------------------------------------
+
     if amount > available_balance:
         raise ValueError(
-            "Insufficient available balance. "
-            f"Available balance is "
-            f"KSh {available_balance:.2f}."
+            f"Insufficient available balance. "
+            f"Available balance is KSh {available_balance:.2f}."
         )
 
     # ---------------------------------------------------------
-    # Create pending withdrawal
+    # Create pending withdrawal transaction
     # ---------------------------------------------------------
 
     transaction = FinancialTransaction(
