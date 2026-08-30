@@ -49,9 +49,16 @@ class FinancialTransaction(Base):
     amount: Mapped[Decimal]=mapped_column(Numeric(18,2))
     currency: Mapped[str]=mapped_column(String(3),default="KES")
     external_reference: Mapped[str|None]=mapped_column(String(128),unique=True,nullable=True,index=True)
+    mpesa_checkout_request_id: Mapped[str | None] = mapped_column(
+        String(128),
+        unique=True,
+        nullable=True,
+        index=True,
+    )
     idempotency_key: Mapped[str|None]=mapped_column(String(128),unique=True,nullable=True,index=True)
     created_at: Mapped[datetime]=mapped_column(DateTime(timezone=True),default=lambda:datetime.now(timezone.utc))
     completed_at: Mapped[datetime|None]=mapped_column(DateTime(timezone=True),nullable=True)
+    
 
 class LedgerEntry(Base):
     __tablename__="ledger_entries"
