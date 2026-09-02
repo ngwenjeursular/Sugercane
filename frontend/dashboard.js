@@ -1,4 +1,5 @@
 const API_BASE = "http://127.0.0.1:8000/api";
+const CSRF_COOKIE = "sugercane_csrf";
 
 const userName = document.getElementById("userName");
 const welcomeName = document.getElementById("welcomeName");
@@ -18,15 +19,33 @@ const sideMenu = document.getElementById("sideMenu");
 const menuOverlay = document.getElementById("menuOverlay");
 const logoutButton = document.getElementById("logoutButton");
 
+function getCsrfToken() {
+    const prefix = `${encodeURIComponent(CSRF_COOKIE)}=`;
+    const cookie = document.cookie
+        .split("; ")
+        .find(row => row.startsWith(prefix));
+    return cookie ? decodeURIComponent(cookie.slice(prefix.length)) : null;
+}
 
 async function apiFetch(endpoint, options = {}) {
+    const method = (options.method || "GET").toUpperCase();
+    const headers = {
+        "Content-Type": "application/json",
+        ...(options.headers || {})
+    };
+
+    if (!["GET", "HEAD", "OPTIONS"].includes(method)) {
+        const csrfToken = getCsrfToken();
+        if (!csrfToken) {
+            throw new Error("Your security session has expired. Please log in again.");
+        }
+        headers["X-CSRF-Token"] = csrfToken;
+    }
+
     const response = await fetch(`${API_BASE}${endpoint}`, {
         credentials: "include",
         ...options,
-        headers: {
-            "Content-Type": "application/json",
-            ...(options.headers || {})
-        }
+        headers
     });
 
     if (!response.ok) {
@@ -49,7 +68,6 @@ async function apiFetch(endpoint, options = {}) {
     return response.json();
 }
 
-
 async function loadDashboard() {
     try {
         const [user, wallet, referrals, transactions] = await Promise.all([
@@ -59,31 +77,26 @@ async function loadDashboard() {
             apiFetch("/users/transactions")
         ]);
 
-        // USER
         userName.textContent = user.full_name;
         welcomeName.textContent = user.full_name.split(" ")[0];
 
-        // WALLET
         walletBalance.textContent =
             `${wallet.currency === "KES" ? "KSh" : wallet.currency} ${wallet.balance}`;
 
         walletStatus.textContent =
             wallet.status.charAt(0).toUpperCase() + wallet.status.slice(1);
 
-        // REFERRALS
         referralCode.textContent = referrals.referral_code;
         referralCount.textContent = referrals.total_referrals;
 
         referralEarnings.textContent =
             `${referrals.currency === "KES" ? "KSh" : referrals.currency} ${referrals.earnings}`;
 
-        // TRANSACTIONS
         renderTransactions(transactions);
 
     } catch (error) {
         console.error("Dashboard error:", error);
 
-        // If authentication failed, return to login
         if (
             error.message.toLowerCase().includes("unauthorized") ||
             error.message.toLowerCase().includes("credentials") ||
@@ -101,7 +114,6 @@ async function loadDashboard() {
     }
 }
 
-
 function renderTransactions(transactions) {
     if (!transactions || transactions.length === 0) {
         transactionsList.innerHTML = `
@@ -113,7 +125,6 @@ function renderTransactions(transactions) {
     }
 
     transactionsList.innerHTML = transactions.map(transaction => {
-
         const date = new Date(transaction.created_at);
 
         const formattedDate = date.toLocaleDateString("en-KE", {
@@ -126,12 +137,9 @@ function renderTransactions(transactions) {
 
         return `
             <div class="transaction-row">
-
                 <div>
                     <strong>${escapeHtml(transaction.type)}</strong>
-                    <span>
-                        ${formattedDate}
-                    </span>
+                    <span>${formattedDate}</span>
                 </div>
 
                 <div class="transaction-amount">
@@ -140,16 +148,12 @@ function renderTransactions(transactions) {
                         ${transaction.amount}
                     </strong>
 
-                    <small>
-                        ${escapeHtml(transaction.status)}
-                    </small>
+                    <small>${escapeHtml(transaction.status)}</small>
                 </div>
-
             </div>
         `;
     }).join("");
 }
-
 
 function escapeHtml(value) {
     return String(value)
@@ -159,9 +163,6 @@ function escapeHtml(value) {
         .replaceAll('"', "&quot;")
         .replaceAll("'", "&#039;");
 }
-
-
-/* MENU */
 
 function openMenu() {
     sideMenu.classList.add("open");
@@ -179,11 +180,7 @@ menuButton.addEventListener("click", openMenu);
 closeMenu.addEventListener("click", closeSideMenu);
 menuOverlay.addEventListener("click", closeSideMenu);
 
-
-/* LOGOUT */
-
 logoutButton.addEventListener("click", async () => {
-
     logoutButton.disabled = true;
     logoutButton.textContent = "Logging out...";
 
@@ -204,7 +201,8 @@ logoutButton.addEventListener("click", async () => {
     }
 });
 
-
-/* LOAD */
+window.addEventListener("sugercane:deposit-started", () => {
+    window.setTimeout(loadDashboard, 1500);
+});
 
 loadDashboard();
