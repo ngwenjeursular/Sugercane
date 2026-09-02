@@ -1,0 +1,153 @@
+.deposit-modal[hidden] {
+    display: none;
+}
+
+.deposit-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+}
+
+.deposit-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.48);
+}
+
+.deposit-dialog {
+    position: relative;
+    width: min(100%, 460px);
+    padding: 32px;
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.2);
+}
+
+.deposit-dialog h2 {
+    margin: 0 0 12px;
+    font-size: clamp(27px, 5vw, 34px);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+}
+
+.deposit-description {
+    margin: 0 0 26px;
+    color: #70706a;
+    line-height: 1.6;
+}
+
+.deposit-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 38px;
+    height: 38px;
+    border: 0;
+    border-radius: 50%;
+    background: #f2f2ed;
+    color: #173f2a;
+    font-size: 25px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.deposit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.deposit-form label {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.deposit-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 56px;
+    padding: 0 15px;
+    border: 1px solid #d9ded9;
+    border-radius: 10px;
+    background: #ffffff;
+}
+
+.deposit-input-wrap:focus-within {
+    border-color: #173f2a;
+    box-shadow: 0 0 0 3px rgba(23, 63, 42, 0.1);
+}
+
+.deposit-input-wrap span {
+    color: #70706a;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.deposit-input-wrap input {
+    width: 100%;
+    min-width: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: #173f2a;
+    font: inherit;
+    font-size: 20px;
+}
+
+.deposit-message {
+    min-height: 22px;
+    margin: 4px 0 2px;
+    color: #70706a;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.deposit-message.error {
+    color: #a52d2d;
+}
+
+.deposit-message.success {
+    color: #17643c;
+}
+
+.deposit-message.pending {
+    color: #5d5d54;
+}
+
+.deposit-submit {
+    width: 100%;
+    min-height: 52px;
+    margin-top: 4px;
+    border: 1px solid #173f2a;
+    border-radius: 10px;
+    background: #173f2a;
+    color: #ffffff;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.deposit-submit:disabled {
+    cursor: wait;
+    opacity: 0.65;
+}
+
+.deposit-modal-open {
+    overflow: hidden;
+}
+
+@media (max-width: 500px) {
+    .deposit-modal {
+        padding: 12px;
+        align-items: end;
+    }
+
+    .deposit-dialog {
+        padding: 26px 21px 22px;
+        border-radius: 18px;
+    }
+}
