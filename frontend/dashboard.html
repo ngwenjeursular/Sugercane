@@ -30,6 +30,7 @@
 
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="deposit.css">
 </head>
 
 <body class="dashboard-page">
@@ -171,6 +172,8 @@
             <div class="wallet-actions">
 
                 <button
+                    id="depositButton"
+                    data-deposit-button
                     type="button"
                     class="primary-action"
                 >
@@ -180,6 +183,7 @@
                 <button
                     type="button"
                     class="secondary-action"
+                    disabled
                 >
                     Withdraw
                 </button>
@@ -292,6 +296,7 @@
 
 
 <script src="dashboard.js"></script>
+<script src="deposit.js"></script>
 
 </body>
 </html>
