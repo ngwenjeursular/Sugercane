@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="dashboard.css">
     <link rel="stylesheet" href="wallet.css">
+    <link rel="stylesheet" href="deposit.css">
 </head>
 
 <body class="dashboard-page">
@@ -210,12 +211,13 @@
             <div class="wallet-action-buttons">
 
                 <button
+                    id="depositButton"
+                    data-deposit-button
                     type="button"
                     class="wallet-action primary-action"
-                    disabled
                 >
                     <span>Deposit</span>
-                    <small>Coming soon</small>
+                    <small>Via M-Pesa</small>
                 </button>
 
 
@@ -245,9 +247,8 @@
 
             <p>
                 Your wallet balance reflects completed credits and debits
-                recorded against your account. Deposits and withdrawals will
-                become available once the corresponding transaction services
-                are enabled.
+                recorded against your account. Deposits are processed through
+                M-Pesa and are reflected after successful payment confirmation.
             </p>
 
         </section>
@@ -258,6 +259,7 @@
 
 
 <script src="wallet.js"></script>
+<script src="deposit.js"></script>
 
 </body>
 </html>
